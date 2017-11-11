@@ -16,10 +16,10 @@ import java.util.Date;
  */
 
 public class LogData {
-    public static void writeLogs(ArrayList<LogEntry> logEntryArrayList){
+    public static void writeLogs(ArrayList<LogEntry> logEntryArrayList, Context context){
 
         try {
-            FileOutputStream fos = new FileOutputStream("purchaseHistory.logShit");
+            FileOutputStream fos = context.openFileOutput("purchaseHistory.logShit",Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             for (int i = 0; i< logEntryArrayList.size(); i++) {
@@ -33,9 +33,9 @@ public class LogData {
         }
     }
 
-    public static ArrayList<LogEntry> readLogs(){
+    public static ArrayList<LogEntry> readLogs(Context context){
         try {
-            FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
+            FileInputStream fis = context.openFileInput("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             ArrayList<LogEntry> output = new ArrayList<>();
@@ -52,9 +52,9 @@ public class LogData {
         }
         return null;
     }
-    public ArrayList<LogEntry> readLogs(Date earliest){
+    public static ArrayList<LogEntry> readLogs(Date earliest,Context context){
         try {
-            FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
+            FileInputStream fis = context.openFileInput("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             ArrayList<LogEntry> output = new ArrayList<>();
