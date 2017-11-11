@@ -31,6 +31,7 @@ public class OptionActivity extends AppCompatActivity {
                     public void run() {
                         Intent myIntent = new Intent(OptionActivity.this, CalculatePurchasesActivity.class);
                         startActivity(myIntent);
+                        finish();
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     }
                 }, TIME_OUT);
@@ -54,6 +55,6 @@ public class OptionActivity extends AppCompatActivity {
 
         final TextView text = findViewById(R.id.editText2);
         int val;
-        text.setText( (val = LogData.readFlex(this) ) > -1 ? String.format("$%d of Flex per Week",val):"Unknown flex amount");
+        text.setText( (val = LogData.readFlex(this) ) > -1 ? String.format("$%d of Flex per Week",val/100):"Unknown flex amount");
     }
 }

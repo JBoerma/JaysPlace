@@ -50,7 +50,7 @@ public class LogData {
         catch(Exception ex){
 
         }
-        return null;
+        return new ArrayList<LogEntry>();
     }
     public static ArrayList<LogEntry> readLogs(Date earliest,Context context){
         try {
@@ -75,7 +75,7 @@ public class LogData {
         catch(Exception ex){
 
         }
-        return null;
+        return new ArrayList<LogEntry>();
     }
     public static int readFlex(Context context){
         try{

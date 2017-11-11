@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 public class CalculatePurchasesActivity extends AppCompatActivity {
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private ListView itemListView;
     private String[] stringArray;
 
@@ -24,6 +29,14 @@ public class CalculatePurchasesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Log.d("HAPPENING", "before CalculateFood is happening");
+        new CalculateFood().execute();
+        Log.d("HAPPENING", "after CalculateFood is happening");
+    }
+
+
+    protected void onResume(Bundle savedInstanceState)
+    {
         Log.d("HAPPENING", "before CalculateFood is happening");
         new CalculateFood().execute();
         Log.d("HAPPENING", "after CalculateFood is happening");
