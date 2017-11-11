@@ -79,7 +79,7 @@ public class LogData {
     }
     public static int readFlex(Context context){
         try{
-            FileInputStream fis = new FileInputStream("amount.flex");
+            FileInputStream fis = context.openFileInput("amount.flex");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             int out = ois.readInt();
@@ -87,13 +87,12 @@ public class LogData {
             return out;
         }
         catch (Exception ex){
-
         }
         return -1;
     }
     public static void writeFlex(int flex, Context context){
         try {
-            FileOutputStream fos = new FileOutputStream("amount.flex");
+            FileOutputStream fos = context.openFileOutput("amount.flex",Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeInt(flex);
             oos.close();
