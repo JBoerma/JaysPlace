@@ -24,14 +24,6 @@ public class CalculatePurchasesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //itemListView = findViewById(R.id.item_list);
-
-//        String[] stringArray = {"HI", "BYE"};
-//        itemListView.setAdapter(
-//                new ArrayAdapter<String>(this,
-//                        android.R.layout.simple_list_item_1,
-//                        stringArray)
-//        );
         Log.d("HAPPENING", "before CalculateFood is happening");
         new CalculateFood().execute();
         Log.d("HAPPENING", "after CalculateFood is happening");
@@ -56,17 +48,6 @@ public class CalculatePurchasesActivity extends AppCompatActivity {
         {
             // change activities to display items, their costs, current flex, and total cost.
             Log.d("HAPPENING", "onPostExecute is happening");
-            itemListView = findViewById(R.id.item_list);
-            itemListView.setAdapter(
-                    new ArrayAdapter<String>(CalculatePurchasesActivity.this,
-                            android.R.layout.simple_list_item_1,
-                            Calculator.getRecItemsArrayList())
-            );
-            //writeToList();
-        }
-
-        void writeToList()
-        {
             itemListView = findViewById(R.id.item_list);
             itemListView.setAdapter(
                     new ArrayAdapter<String>(CalculatePurchasesActivity.this,

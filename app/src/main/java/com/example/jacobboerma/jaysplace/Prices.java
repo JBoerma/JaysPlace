@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 public class Prices {
-    public Map<String, Integer> getPrices(){
+    public static Map<String, Integer> getPrices(){
         Uri path = Uri.parse("android.resource://com.example.jacobboerma.jaysplace/raw/prices.csv");
         File prices = new File(path.toString());
         Map<String, Integer> out = new HashMap<>();

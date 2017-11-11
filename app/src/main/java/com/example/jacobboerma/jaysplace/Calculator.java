@@ -25,6 +25,10 @@ public class Calculator
     private static Map<String, Integer> items;
     private static Map<String, Integer> prefItems;
     private static Map<String, Integer> recItems;
+    private static int flexAvailable;
+    private static int flexPerWeek;
+
+    private static ArrayList<LogEntry> entries;
 
     public static Map<String, Integer> getItems() {
         return items;
@@ -38,7 +42,22 @@ public class Calculator
     public static void start()
     {
         items = new HashMap<String, Integer>();
-        items.put("Pizza", 100);
+        items.put("Pizza", 100); // TODO: get a file working and replace this //Prices.getPrices();
+
+        try {
+            entries = LogData.readLogs();
+            int moneyUsed = 0;
+            for (int i = 0; i < entries.size(); i++) {
+                moneyUsed += items.get(entries.get(i).getItem());
+            }
+            flexPerWeek = LogData.readFlex();
+            flexAvailable = flexPerWeek - moneyUsed;
+        }
+        catch (Exception ex)
+        {
+            Log.d("ERROR", "Null entries");
+        }
+
         prefItems = new HashMap<String, Integer>();
         recItems = new HashMap<String, Integer>();
         //itemCosts = new ArrayList<String>();
@@ -67,7 +86,7 @@ public class Calculator
      */
     public static void updateRecItems()
     {
-
+        // TODO: RecItems
     }
 
     public static Map<String, Integer> getRecItems()
@@ -92,6 +111,7 @@ public class Calculator
      */
     public static void calculate()
     {
+        // TODO: implement algorithms.
         Log.d("HAPPENING", "Calculate is happening");
         recItems = prefItems;
 
