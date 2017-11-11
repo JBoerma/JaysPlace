@@ -27,6 +27,7 @@ import static android.content.ContentValues.TAG;
 public class Calculator
 {
     private static Map<String, Integer> items;
+    private static Map<String, Integer> hatedItems;
     private static Map<String, Integer> prefItems;
     private static Map<String, Integer> recItems;
     private static int flexAvailable;
@@ -57,14 +58,17 @@ public class Calculator
             }
             flexPerWeek = LogData.readFlex(context);
             flexAvailable = flexPerWeek - moneyUsed;
+            Log.e(TAG, "start: "+flexAvailable);
         }
         catch (Exception ex)
         {
-            Log.d("ERROR", "Null entries");
+            Log.e("ERROR", "Null entries: "+ex.toString());
         }
 
         prefItems = new HashMap<String, Integer>();
         recItems = new HashMap<String, Integer>();
+        hatedItems = new HashMap<String, Integer>();
+
         //itemCosts = new ArrayList<String>();
     }
 
@@ -80,9 +84,32 @@ public class Calculator
         updateRecItems();
     }
 
+    public static void resetRecList()
+    {
+        recItems = new HashMap<String, Integer>();
+    }
+
+
     public static void removePreferredItem(String item)
     {
         prefItems.remove(item);
+        updateRecItems();
+    }
+
+    /**
+     * Will write to aa file, adding an item.
+     * @param item String defining item
+     */
+    public static void addHatedItem(String item)
+    {
+        int price = items.get(item);
+        hatedItems.put(item, price);
+        updateRecItems();
+    }
+
+    public static void removeHatedItem(String item)
+    {
+        hatedItems.remove(item);
         updateRecItems();
     }
 
@@ -99,14 +126,21 @@ public class Calculator
         return recItems;
     }
 
+    public static void setFlex(int flexAmount)
+    {
+        flexAvailable = flexAmount;
+    }
+
+
     public static ArrayList<String> getRecItemsArrayList()
     {
         ArrayList<String> myList = new ArrayList<String>();
         Object[] keys = recItems.keySet().toArray();
         for(int i = 0; i < recItems.keySet().size(); i++)
         {
-            myList.add(keys[i].toString() + " : " + recItems.get(keys[i].toString()));
+            myList.add(keys[i].toString() + ":  $" + ( (float)recItems.get(keys[i].toString()))/100);
         }
+        Log.e(TAG, "getRecItemsArrayList: "+myList.toString() );
         return myList;
     }
 
@@ -118,7 +152,44 @@ public class Calculator
     {
         // TODO: implement algorithms.
         Log.d("HAPPENING", "Calculate is happening");
-        recItems = prefItems;
+        //recItems = prefItems;
+        sketchCalcForThon();
+    }
 
+    public static void sketchCalcForThon()
+    {
+        Object[] itemKeys = items.keySet().toArray();
+        Map<String, Integer> tempMap = new HashMap<String, Integer>();
+        for(int i = 0; i < items.size(); i++)
+        {
+            tempMap.put((String) itemKeys[i], items.get(itemKeys[i].toString()));
+        }
+        Object[] hatedKeys = hatedItems.keySet().toArray();
+        for(int i = 0; i < hatedItems.size(); i++)
+        {
+            tempMap.remove(hatedKeys[i]);
+        }
+
+        Object[] prefKeys = prefItems.keySet().toArray();
+        for(int i = 0; i < prefItems.size(); i++)
+        {
+            int cost = items.get(prefKeys[i].toString());
+            if(flexAvailable - cost >= 0)
+            {
+                flexAvailable -= cost;
+                recItems.put(prefKeys[i].toString(), cost);
+            }
+        }
+
+        Object[] tempKeys = tempMap.keySet().toArray();
+        for(int i = 0; i < tempMap.size(); i++)
+        {
+            int cost = items.get(tempKeys[i].toString());
+            if(flexAvailable - cost >= 0)
+            {
+                flexAvailable -= cost;
+                recItems.put(tempKeys[i].toString(), cost);
+            }
+        }
     }
 }

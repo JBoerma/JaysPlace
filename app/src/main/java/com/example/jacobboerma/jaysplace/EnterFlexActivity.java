@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 
 public class EnterFlexActivity extends AppCompatActivity {
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,9 @@ public class EnterFlexActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    int amount = Integer.parseInt(text.getText().toString());
+                    int amount = Integer.parseInt(text.getText().toString())*100;
+                    Calculator.setFlex(amount);
+                    Calculator.resetRecList();
                     LogData.writeFlex(amount, EnterFlexActivity.this);
                     goToOption();
                 }
@@ -50,5 +56,6 @@ public class EnterFlexActivity extends AppCompatActivity {
     private void goToOption(){
         Intent intent = new Intent(this,OptionActivity.class);
         startActivity(intent);
+        finish();
     }
 }
