@@ -49,4 +49,53 @@ public class LogData {
         }
         return null;
     }
+    public ArrayList<LogEntry> readLogs(Date earliest){
+        try {
+            FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            ArrayList<LogEntry> output = new ArrayList<>();
+            String item;
+            while( (item = (String)ois.readObject()) != null ) {
+                Date itemDate = (Date)ois.readObject();
+                if( !(itemDate.before(earliest)) ){
+                    output.add(new LogEntry((Date) ois.readObject(), item));
+                }
+                else{
+                    break;
+                }
+            }
+
+            ois.close();
+            return output;
+        }
+        catch(Exception ex){
+
+        }
+        return null;
+    }
+    public int readFlex(){
+        try{
+            FileInputStream fis = new FileInputStream("amount.flex");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            int out = ois.readInt();
+            ois.close();
+            return out;
+        }
+        catch (Exception ex){
+
+        }
+        return -1;
+    }
+    public void writeFlex(int flex){
+        try {
+            FileOutputStream fos = new FileOutputStream("amount.flex");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeInt(flex);
+        }
+        catch (Exception ex){
+
+        }
+    }
 }
