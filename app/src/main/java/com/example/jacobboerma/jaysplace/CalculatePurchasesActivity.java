@@ -35,7 +35,6 @@ public class CalculatePurchasesActivity extends AppCompatActivity {
     private class CalculateFood extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void... blah) {
             Calculator.calculate(); // has the Calculator update values
-            Calculator.addPreferredItem("Pizza");
             return null;
         }
 
