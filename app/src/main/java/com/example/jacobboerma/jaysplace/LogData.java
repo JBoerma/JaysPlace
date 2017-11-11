@@ -1,5 +1,8 @@
 package com.example.jacobboerma.jaysplace;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInput;
@@ -13,7 +16,7 @@ import java.util.Date;
  */
 
 public class LogData {
-    public static void writeLogs(ArrayList<LogEntry> logEntryArrayList){
+    public void writeLogs(ArrayList<LogEntry> logEntryArrayList){
 
         try {
             FileOutputStream fos = new FileOutputStream("purchaseHistory.logShit");
@@ -30,7 +33,7 @@ public class LogData {
         }
     }
 
-    public static ArrayList<LogEntry> readLogs(){
+    public ArrayList<LogEntry> readLogs(){
         try {
             FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -49,7 +52,7 @@ public class LogData {
         }
         return null;
     }
-    public static ArrayList<LogEntry> readLogs(Date earliest){
+    public ArrayList<LogEntry> readLogs(Date earliest){
         try {
             FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -74,7 +77,7 @@ public class LogData {
         }
         return null;
     }
-    public static int readFlex(){
+    public static int readFlex(Context context){
         try{
             FileInputStream fis = new FileInputStream("amount.flex");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -88,11 +91,12 @@ public class LogData {
         }
         return -1;
     }
-    public static void writeFlex(int flex){
+    public static void writeFlex(int flex, Context context){
         try {
             FileOutputStream fos = new FileOutputStream("amount.flex");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeInt(flex);
+            oos.close();
         }
         catch (Exception ex){
 

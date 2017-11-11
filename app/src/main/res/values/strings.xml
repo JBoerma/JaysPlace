@@ -5,4 +5,6 @@
     <string name="title_activity_enter_flex">EnterFlexActivity</string>
     <string name="title_activity_calculate_purchases">CalculatePurchasesActivity</string>
     <string name="enter_flex_hint">Enter your Flex amount</string>
+    <string name="number_format_error_description">That is not a valid number</string>
+    <string name="error">error</string>
 </resources>
