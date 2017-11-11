@@ -5,10 +5,13 @@ import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Calculator class
@@ -42,11 +45,12 @@ public class Calculator
      */
     public static void start(Context context)
     {
-        items = new HashMap<String, Integer>();
-        items.put("Pizza", 100); // TODO: get a file working and replace this //Prices.getPrices();
-
+        items = Prices.getPrices(context);
+        Log.e(TAG, "start: "+items.toString());
         try {
-            entries = LogData.readLogs();
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+            entries = LogData.readLogs(c.getTime(),context);
             int moneyUsed = 0;
             for (int i = 0; i < entries.size(); i++) {
                 moneyUsed += items.get(entries.get(i).getItem());
