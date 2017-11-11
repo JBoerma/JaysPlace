@@ -16,7 +16,7 @@ import java.util.Date;
  */
 
 public class LogData {
-    public void writeLogs(ArrayList<LogEntry> logEntryArrayList){
+    public static void writeLogs(ArrayList<LogEntry> logEntryArrayList){
 
         try {
             FileOutputStream fos = new FileOutputStream("purchaseHistory.logShit");
@@ -33,7 +33,7 @@ public class LogData {
         }
     }
 
-    public ArrayList<LogEntry> readLogs(){
+    public static ArrayList<LogEntry> readLogs(){
         try {
             FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);

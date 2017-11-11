@@ -1,5 +1,6 @@
 package com.example.jacobboerma.jaysplace;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.lang.reflect.Array;
@@ -39,7 +40,7 @@ public class Calculator
      * initiates recItems
      * reads from file to write to items
      */
-    public static void start()
+    public static void start(Context context)
     {
         items = new HashMap<String, Integer>();
         items.put("Pizza", 100); // TODO: get a file working and replace this //Prices.getPrices();
@@ -50,7 +51,7 @@ public class Calculator
             for (int i = 0; i < entries.size(); i++) {
                 moneyUsed += items.get(entries.get(i).getItem());
             }
-            flexPerWeek = LogData.readFlex();
+            flexPerWeek = LogData.readFlex(context);
             flexAvailable = flexPerWeek - moneyUsed;
         }
         catch (Exception ex)
