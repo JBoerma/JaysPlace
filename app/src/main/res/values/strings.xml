@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">JaysPlace</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_option">OptionActivity</string>
+    <string name="title_activity_enter_flex">EnterFlexActivity</string>
+    <string name="title_activity_calculate_purchases">CalculatePurchasesActivity</string>
 </resources>

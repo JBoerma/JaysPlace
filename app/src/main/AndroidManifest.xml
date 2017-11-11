@@ -19,6 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".OptionActivity"
+            android:label="@string/title_activity_option"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EnterFlexActivity"
+            android:label="@string/title_activity_enter_flex"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CalculatePurchasesActivity"
+            android:label="@string/title_activity_calculate_purchases"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
