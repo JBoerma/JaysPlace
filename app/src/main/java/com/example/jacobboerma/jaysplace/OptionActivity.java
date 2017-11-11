@@ -51,5 +51,9 @@ public class OptionActivity extends AppCompatActivity {
                 }, TIME_OUT);
             }
         });
+
+        final TextView text = findViewById(R.id.editText2);
+        int val;
+        text.setText( (val = LogData.readFlex(this) ) > -1 ? String.format("$%d of Flex per Week",val):"Unknown flex amount");
     }
 }
