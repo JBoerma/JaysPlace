@@ -1,5 +1,8 @@
 package com.example.jacobboerma.jaysplace;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInput;
@@ -13,7 +16,7 @@ import java.util.Date;
  */
 
 public class LogData {
-    public void writeLogs(ArrayList<LogEntry> logEntryArrayList){
+    public static void writeLogs(ArrayList<LogEntry> logEntryArrayList){
 
         try {
             FileOutputStream fos = new FileOutputStream("purchaseHistory.logShit");
@@ -30,7 +33,7 @@ public class LogData {
         }
     }
 
-    public ArrayList<LogEntry> readLogs(){
+    public static ArrayList<LogEntry> readLogs(){
         try {
             FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -49,7 +52,7 @@ public class LogData {
         }
         return null;
     }
-    public ArrayList<LogEntry> readLogs(Date earliest){
+    public static ArrayList<LogEntry> readLogs(Date earliest){
         try {
             FileInputStream fis = new FileInputStream("purchaseHistory.logShit");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -74,9 +77,9 @@ public class LogData {
         }
         return null;
     }
-    public int readFlex(){
+    public static int readFlex(Context context){
         try{
-            FileInputStream fis = new FileInputStream("amount.flex");
+            FileInputStream fis = context.openFileInput("amount.flex");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             int out = ois.readInt();
@@ -84,18 +87,19 @@ public class LogData {
             return out;
         }
         catch (Exception ex){
-
+            Log.e("Error reading", "readFlex: "+ex.toString());
         }
         return -1;
     }
-    public void writeFlex(int flex){
+    public static void writeFlex(int flex, Context context){
         try {
-            FileOutputStream fos = new FileOutputStream("amount.flex");
+            FileOutputStream fos = context.openFileOutput("amount.flex",context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeInt(flex);
+            oos.close();
         }
         catch (Exception ex){
-
+            Log.e("Error writing","writeFlex: "+ex.toString());
         }
     }
 }
