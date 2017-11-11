@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class OptionActivity extends AppCompatActivity {
-    final static int TIME_OUT = 1000;
+    final static int TIME_OUT = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
