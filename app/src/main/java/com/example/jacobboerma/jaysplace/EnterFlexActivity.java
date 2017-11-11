@@ -26,7 +26,7 @@ public class EnterFlexActivity extends AppCompatActivity {
 
         final TextView text = findViewById(R.id.editText);
 
-        final FloatingActionButton button = findViewById(R.id.fab);
+        /*final FloatingActionButton button = findViewById(R.id.fab);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -49,7 +49,7 @@ public class EnterFlexActivity extends AppCompatActivity {
                     Log.d("Testin", "onClick: Clicked");
                 }
             }
-        });
+        });*/
     }
 
     private void goToOption(){
