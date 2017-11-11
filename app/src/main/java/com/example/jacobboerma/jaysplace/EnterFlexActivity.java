@@ -14,6 +14,9 @@ import android.widget.TextView;
 public class EnterFlexActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
+        Intent myIntent = new Intent(EnterFlexActivity.this, OptionActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }
 

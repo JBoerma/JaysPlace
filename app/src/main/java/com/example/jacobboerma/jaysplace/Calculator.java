@@ -3,12 +3,9 @@ package com.example.jacobboerma.jaysplace;
 import android.content.Context;
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
@@ -49,9 +46,13 @@ public class Calculator
         items = Prices.getPrices(context);
         Log.e(TAG, "start: "+items.toString());
         try {
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-            entries = LogData.readLogs(c.getTime(),context);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
+            cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+            entries = LogData.readLogs(cal, context);
             int moneyUsed = 0;
             for (int i = 0; i < entries.size(); i++) {
                 moneyUsed += items.get(entries.get(i).getItem());

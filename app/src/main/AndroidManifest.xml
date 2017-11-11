@@ -31,6 +31,7 @@
             android:name=".CalculatePurchasesActivity"
             android:label="@string/title_activity_calculate_purchases"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".FlexSpentActivity" />
     </application>
 
 </manifest>

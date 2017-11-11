@@ -1,5 +1,6 @@
 package com.example.jacobboerma.jaysplace;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,25 +9,23 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CalculatePurchasesActivity extends AppCompatActivity {
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
     private ListView itemListView;
     private String[] stringArray;
+
+    @Override
+    public void onBackPressed() {
+        Intent myIntent = new Intent(CalculatePurchasesActivity.this, OptionActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculate_purchases);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Log.d("HAPPENING", "before CalculateFood is happening");

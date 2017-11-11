@@ -3,13 +3,20 @@ package com.example.jacobboerma.jaysplace;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInput;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by matthew on 11/10/17.
@@ -19,63 +26,71 @@ public class LogData {
     public static void writeLogs(ArrayList<LogEntry> logEntryArrayList, Context context){
 
         try {
-            FileOutputStream fos = context.openFileOutput("purchaseHistory.logShit",Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            for (int i = 0; i< logEntryArrayList.size(); i++) {
-                oos.writeObject(logEntryArrayList.get(i).getItem());
-                oos.writeObject(logEntryArrayList.get(i).getDateEntered());
+            OutputStream os = context.openFileOutput("purchaseHistory.logShit", Context.MODE_PRIVATE);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+            Log.e(TAG, "writeLogs: " + logEntryArrayList.size());
+            for (LogEntry entry : logEntryArrayList) {
+                bw.write(String.format("%s,%s\n", "" + entry.getDateEntered().getTimeInMillis(), entry.getItem()));
             }
-            oos.close();
+            bw.close();
+            os.close();
         }
         catch(Exception ex){
-
+            Log.e(TAG, "writeLogs: " + ex.toString());
         }
     }
 
     public static ArrayList<LogEntry> readLogs(Context context){
+
+        ArrayList<LogEntry> out = new ArrayList<>();
         try {
-            FileInputStream fis = context.openFileInput("purchaseHistory.logShit");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            ArrayList<LogEntry> output = new ArrayList<>();
-            String item;
-            while( (item = (String)ois.readObject()) != null ) {
-                output.add(new LogEntry((Date)ois.readObject(),item));
+            InputStream in = context.openFileInput("purchaseHistory.logShit");
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] things = line.split(",");
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(Long.parseLong(things[0]));
+                out.add(new LogEntry(c, things[1]));
             }
-
-            ois.close();
-            return output;
+            br.close();
+            in.close();
+            return out;
         }
         catch(Exception ex){
-
+            return null;
         }
-        return new ArrayList<LogEntry>();
     }
-    public static ArrayList<LogEntry> readLogs(Date earliest,Context context){
+
+    public static ArrayList<LogEntry> readLogs(Calendar earliest, Context context) {
+
+        ArrayList<LogEntry> out = new ArrayList<>();
         try {
-            FileInputStream fis = context.openFileInput("purchaseHistory.logShit");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            ArrayList<LogEntry> output = new ArrayList<>();
-            String item;
-            while( (item = (String)ois.readObject()) != null ) {
-                Date itemDate = (Date)ois.readObject();
-                if( !(itemDate.before(earliest)) ){
-                    output.add(new LogEntry((Date) ois.readObject(), item));
+            InputStream in = context.openFileInput("purchaseHistory.logShit");
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] things = line.split(",");
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(Long.parseLong(things[0]));
+                Log.e(TAG, "C time: " + c.getTimeInMillis());
+                Log.e(TAG, "Earliest time:" + earliest.getTimeInMillis());
+                if (c.before(earliest)) {
+                    return out;
                 }
-                else{
-                    break;
-                }
+                out.add(new LogEntry(c, things[1]));
+                Log.e(TAG, "readLogs: " + out.size());
             }
-
-            ois.close();
-            return output;
+            return out;
+        } catch (java.io.FileNotFoundException ex) {
+            Log.e(TAG, "readLogs: WHY IS THIS STILL HAPPENING");
+            return new ArrayList<>();
         }
         catch(Exception ex){
-
+            Log.e(TAG, "readLogs: " + ex.toString());
+            Log.e(TAG, "" + out.size());
+            return new ArrayList<>();
         }
-        return new ArrayList<LogEntry>();
     }
     public static int readFlex(Context context){
         try{
@@ -87,6 +102,7 @@ public class LogData {
             return out;
         }
         catch (Exception ex){
+            Log.e(TAG, "readFlex: " + ex.toString());
         }
         return -1;
     }
