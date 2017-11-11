@@ -1,5 +1,6 @@
 package com.example.jacobboerma.jaysplace;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        new StartCalc().execute();
+        Context[] arr = {MainActivity.this};
+        new StartCalc().execute(arr);
     }
 
     protected void finishDis() {
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         }, TIME_OUT);
     }
 
-    private class StartCalc extends AsyncTask<Void, Void, Void> {
-        protected Void doInBackground(Void... blah) {
-            Calculator.start();
+    private class StartCalc extends AsyncTask<Context, Void, Void> {
+        protected Void doInBackground(Context... context) {
+            Calculator.start(context[0]);
             return null;
         }
 

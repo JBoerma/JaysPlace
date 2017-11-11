@@ -1,5 +1,6 @@
 package com.example.jacobboerma.jaysplace;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.lang.reflect.Array;
@@ -40,7 +41,7 @@ public class Calculator
      * initiates recItems
      * reads from file to write to items
      */
-    public static void start()
+    public static void start(Context context)
     {
         items = new HashMap<String, Integer>();
         prefItems = new HashMap<String, Integer>();
